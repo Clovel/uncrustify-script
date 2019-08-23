@@ -21,6 +21,8 @@ function usage() {
 MYDIR=$(dirname $(readlink -f $0))
 echo "MYDIR = $MYDIR"
 echo "PWD   = $PWD"
+
+# Fetching the default configuration file
 UNCRUSTIFYCFG="$MYDIR/custom-uncrustify-config.cfg" # Default value
 
 # Project definition ----------------------------
@@ -76,6 +78,14 @@ PROJECTDIR="$PWD/$(echo $1 | sed 's/\/$//')" # Remove last '/' char if exist
 shift
 
 LISTFILE="src_file_list.txt"
+
+# Does the config file exist ? ------------------
+if [[ -f "$UNCRUSTIFYCFG" ]]; then
+    echo "[INFO ] Using config file : $UNCRUSTIFYCFG"
+else
+    echo "[ERROR] No config file found !"
+    exit
+fi
 
 # Does the project exist ------------------------
 if [[ $PROJECTDIR == "" ]]; then
